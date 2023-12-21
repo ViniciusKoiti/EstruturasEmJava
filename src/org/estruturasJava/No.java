@@ -5,6 +5,14 @@ public class No<T> {
     private T conteudo;
     private No proximoNo;
 
+    public No() {
+    }
+
+    public No(T conteudo) {
+        this.conteudo = conteudo;
+    }
+
+
     public T getConteudo() {
         return conteudo;
     }
