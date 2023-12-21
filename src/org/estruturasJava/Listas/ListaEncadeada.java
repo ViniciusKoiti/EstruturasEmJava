@@ -10,7 +10,7 @@ public interface ListaEncadeada<T> {
     
     No<T> adicionar(No<T> no);
 
-    No<T> adicionar(No no, int index);
+    No<T> adicionar(No<T> no, int index);
 
     No<T> removerNo();
 

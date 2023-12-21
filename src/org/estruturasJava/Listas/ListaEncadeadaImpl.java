@@ -48,14 +48,26 @@ public class ListaEncadeadaImpl<T> implements ListaEncadeada<T>{
     }
 
     @Override
-    public No<T> adicionar(No no, int index) {
+    public No<T> adicionar(No<T> no, int index) {
         if(!validaNo(index)){
             throw new IndexOutOfBoundsException("Índice: " + index + ", Tamanho: " + tamanho());
         }
+        if(index == 0){
+            return adicionar(no);
+        }
 
+        if(index == tamanho()){
+            No<T> ultimoNo = acessarNo(tamanho() - 1);
+            ultimoNo.setProximoNo(no);
+            return no;
+        }
 
+        No<T> noAnteriorAcessado = acessarNo(index - 1);
+        noAnteriorAcessado.setProximoNo(no);
+        No<T> noPosteriorAcessado = acessarNo(index + 1);
+        no.setProximoNo(noPosteriorAcessado);
 
-        return null;
+        return no;
     }
 
     @Override
@@ -69,8 +81,8 @@ public class ListaEncadeadaImpl<T> implements ListaEncadeada<T>{
             cabeca = null;
             return cloneNoCabeca;
         }
-        No<T> penultimoNo = acessarNo(tamanho() - 1);
-        No<T> ultimoNo = acessarNo(tamanho());
+        No<T> penultimoNo = acessarNo(tamanho() - 2);
+        No<T> ultimoNo = acessarNo(tamanho() - 1);
         penultimoNo.setProximoNo(null);
         return ultimoNo;
     }
