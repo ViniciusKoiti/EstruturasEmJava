@@ -3,7 +3,7 @@ package org.estruturasJava;
 public class No<T> {
 
     private T conteudo;
-    private No proximoNo;
+    private No<T> proximoNo;
 
     public No() {
     }
@@ -21,11 +21,11 @@ public class No<T> {
         this.conteudo = conteudo;
     }
 
-    public No getProximoNo() {
+    public No<T> getProximoNo() {
         return proximoNo;
     }
 
-    public void setProximoNo(No proximoNo) {
+    public void setProximoNo(No<T> proximoNo) {
         this.proximoNo = proximoNo;
     }
 

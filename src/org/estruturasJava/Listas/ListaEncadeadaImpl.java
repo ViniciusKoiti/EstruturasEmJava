@@ -2,6 +2,8 @@ package org.estruturasJava.Listas;
 
 import org.estruturasJava.No;
 
+import java.util.NoSuchElementException;
+
 public class ListaEncadeadaImpl<T> implements ListaEncadeada<T>{
 
     private No<T> cabeca;
@@ -35,9 +37,8 @@ public class ListaEncadeadaImpl<T> implements ListaEncadeada<T>{
     @Override
     public No<T> adicionar(No<T> no) {
         if(estaVazia()){
-           No<T> iniciandoCabeca = new No<>();
-           cabeca = iniciandoCabeca;
-           cabeca.setProximoNo(no);
+            cabeca = no;
+            return no;
         }
 
         No<T> segundoNo = cabeca;
@@ -48,17 +49,58 @@ public class ListaEncadeadaImpl<T> implements ListaEncadeada<T>{
 
     @Override
     public No<T> adicionar(No no, int index) {
+        if(!validaNo(index)){
+            throw new IndexOutOfBoundsException("Índice: " + index + ", Tamanho: " + tamanho());
+        }
+
+
+
         return null;
     }
 
     @Override
-    public No removerNo() {
-        return null;
+    public No<T> removerNo() {
+        if(estaVazia()) {
+            throw new NoSuchElementException("Não é possível remover de uma lista vazia.");
+        }
+        if(tamanho() == 1){
+            No<T> cloneNoCabeca = new No<>();
+            cloneNoCabeca.setConteudo(cabeca.getConteudo());
+            cabeca = null;
+            return cloneNoCabeca;
+        }
+        No<T> penultimoNo = acessarNo(tamanho() - 1);
+        No<T> ultimoNo = acessarNo(tamanho());
+        penultimoNo.setProximoNo(null);
+        return ultimoNo;
     }
 
     @Override
-    public No removerNo(int index) {
-        return null;
+    public No<T> removerNo(int index) {
+        if(!validaNo(index)){
+            throw new IndexOutOfBoundsException("Índice: " + index + ", Tamanho: " + tamanho());
+        }
+
+        if(index == tamanho() - 1){
+            return removerNo();
+        }
+
+        if(index == 0){
+            No<T> noAcessado = acessarNo(index);
+            No<T> proximoNo = acessarNo(index + 1);
+            cabeca.setProximoNo(proximoNo);
+            noAcessado.setProximoNo(null);
+            return noAcessado;
+        }
+
+        No<T> noAnteriorAcessado = acessarNo(index - 1);
+        No<T> noAcessado = acessarNo(index);
+        No<T> noPosteriorAcessado = acessarNo(index + 1);
+
+        noAnteriorAcessado.setProximoNo(noPosteriorAcessado);
+        noAcessado.setProximoNo(null);
+
+        return noAcessado;
     }
 
     @Override
@@ -66,26 +108,19 @@ public class ListaEncadeadaImpl<T> implements ListaEncadeada<T>{
         if(!validaNo(index)){
             throw new IndexOutOfBoundsException("Índice: " + index + ", Tamanho: " + tamanho());
         }
-
-        No primeiroNo = cabeca;
-        No percorrendoNo = new No();
+        No<T> primeiroNo = cabeca;
         for (int i = 0; i < index; i++) {
-            if(i == 0) {
-                percorrendoNo = primeiroNo.getProximoNo();
-            }
-            percorrendoNo = percorrendoNo.getProximoNo();
+            primeiroNo = primeiroNo.getProximoNo();
         }
-        return percorrendoNo;
+        return primeiroNo;
     }
 
     private boolean validaNo(int index){
-        if (!estaVazia()){
+        if (estaVazia()){
             return false;
         }
 
-        if(index > tamanho()){
-            return false;
-        }
-        return true;
+        return index <= tamanho();
     }
+
 }

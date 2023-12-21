@@ -3,16 +3,15 @@ import org.estruturasJava.No;
 
 public class Main {
     public static void main(String[] args) {
-        No<String> no = new No<>("Teste");
-        No<String> segundoNo = new No<>("Teste1");
-        no.setProximoNo(segundoNo);
-        ListaEncadeadaImpl<String> listaEncadeada = new ListaEncadeadaImpl<>();
-        listaEncadeada.adicionar(no);
-        listaEncadeada.adicionar(segundoNo);
-        No primeiroNo = listaEncadeada.acessarNo(1);
-        System.out.println(primeiroNo.toString());
+        ListaEncadeadaImpl<Integer> listaEncadeada = new ListaEncadeadaImpl<>();
+        listaEncadeada.adicionar(new No<>(1));
+        listaEncadeada.adicionar(new No<>(2));
+        listaEncadeada.adicionar(new No<>(3));
 
-
+        // Acessando e imprimindo elementos
+        System.out.println("Elemento no índice 0: " + listaEncadeada.acessarNo(0).getConteudo());
+        System.out.println("Elemento no índice 1: " + listaEncadeada.acessarNo(1).getConteudo());
+        System.out.println("Elemento no índice 2: " + listaEncadeada.acessarNo(2).getConteudo());
 
     }
 }
